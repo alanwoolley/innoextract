@@ -121,6 +121,9 @@ static void print_license() {
 
 int main(int argc, char * argv[]) {
 	
+	logger::total_errors = 0;
+	logger::total_warnings = 0;
+	
 	po::options_description generic("Generic options");
 	generic.add_options()
 		("help,h", "Show supported options")
