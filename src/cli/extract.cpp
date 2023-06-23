@@ -135,7 +135,11 @@ class file_output : private boost::noncopyable {
 
 	fs::path path_;
 	const processed_file * file_;
+#ifdef __ANDROID__
+	util::ofstream stream_;
+#else
 	util::fstream stream_;
+#endif
 
 	crypto::hasher checksum_;
 	boost::uint64_t checksum_position_;
@@ -932,7 +936,7 @@ void process_file(const fs::path & installer, const extract_options & o) {
 		throw std::runtime_error("Could not open file \"" + installer.string() + '"');
 
 #else
-	int fd = atoi(file.filename().c_str());
+	int fd = atoi(installer.filename().c_str());
 	io::file_descriptor_flags flags = io::file_descriptor_flags::never_close_handle;
 	io::file_descriptor_source source = io::file_descriptor_source(fd, flags);
 	io::stream_buffer<io::file_descriptor_source> fpstream(source);

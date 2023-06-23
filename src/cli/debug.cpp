@@ -636,7 +636,12 @@ static void dump_headers(std::istream & is, const setup::version & version, cons
 	}
 	
 	try {
-		ofs << stream::block_reader::get(is, version)->rdbuf();
+#ifdef __ANDROID__
+        *ofs.stream() << stream::block_reader::get(is, version)->rdbuf();
+#else
+        ofs << stream::block_reader::get(is, version)->rdbuf();
+#endif
+
 	} catch(const std::exception & e) {
 		std::ostringstream oss;
 		oss << "Stream error while dumping " << type << " setup headers!\n";
