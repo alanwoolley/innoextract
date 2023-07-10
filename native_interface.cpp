@@ -188,7 +188,7 @@ extern "C" void Java_uk_co_armedpineapple_innoextract_service_ExtractService_nat
   serviceCls = (jclass) env->NewGlobalRef(cls);
   serviceObj = (jobject) env->NewGlobalRef(obj);
   fileProxyCls = static_cast<jclass>(env->NewGlobalRef(env->FindClass(
-      "uk/co/armedpineapple/innoextract/service/TemporaryExtractedFile")));
+      "uk/co/armedpineapple/innoextract/service/OutputFile")));
 
   setvbuf(stdout, 0, _IOLBF, 0);
   setvbuf(stderr, 0, _IONBF, 0);
@@ -219,7 +219,7 @@ jobject getOutputFile(const std::string &path) {
   jvm->AttachCurrentThread(&env, nullptr);
   jmethodID mid = env->GetMethodID(serviceCls,
                                    "newFile",
-                                   "([B)Luk/co/armedpineapple/innoextract/service/TemporaryExtractedFile;");
+                                   "([B)Luk/co/armedpineapple/innoextract/service/OutputFile;");
   jbyteArray arr = env->NewByteArray(path.length());
   env->SetByteArrayRegion(arr, 0, path.length(), (jbyte *) path.c_str());
 
